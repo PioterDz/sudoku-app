@@ -26,6 +26,9 @@ module.exports = (env) => {
             filename: 'app.' + enviroment + '.bundle.js'
         },
         plugins: plugins,
+        resolve: {
+            alias: { 'react-dom': '@hot-loader/react-dom'  }
+        },
         module: {
             rules: [
                 {
