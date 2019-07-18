@@ -6,11 +6,12 @@ class Board extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            number: '',
-            key: ''
-        };
+            number: ''
+        }
+        this.handleChange = this.handleChange.bind(this);
     }
 
+    
     handleChange(event) {
         let numberInTile = event.target.value;
 
@@ -20,22 +21,12 @@ class Board extends React.Component {
 
     }
 
-    // addTiles = () => {
-    //     let initialBoard = this.props.initBoard;
-    //     initialBoard.map((val) => 
-            
-    //     )
-    // }
-   
-
     render() {
+
+        console.log(this.props, 'props');
         return (
             <div className="Board">
-                <h1>{this.props.initBoard}</h1>
-                {this.props.initBoard.map((tile) => 
-                    <Tile key={this.state.key} value={this.state.number} onChange={this.handleChange.bind(this)} />
-                    )
-                }
+                {  this.props.initBoard.length === 0 ? 'Start New Game' : this.props.initBoard.map((val) => <Tile key={val.id} item={val.value} onChange={this.handleChange} />) }
             </div>
         );
     }
