@@ -1,9 +1,9 @@
 import React from 'react';
-import style from './App.css';
+import styles from './App.css';
 import Board from './Board.js';
 import sudoku from 'sudoku-umd';
-import keyIndex from 'react-key-index';
 import { hot } from 'react-hot-loader';
+
 
 class App extends React.Component {
     constructor(){
@@ -12,18 +12,20 @@ class App extends React.Component {
             initialBoard: [],
             board: []
         }
-        this.generateInitialBoard = this.generateInitialBoard.bind(this);
+        this.generateBoard = this.generateBoard.bind(this);
         this.sudokuSolve = this.sudokuSolve.bind(this);
         this.setInitialBoardAsBoard = this.setInitialBoardAsBoard.bind(this);
     }
 
 
-    generateInitialBoard() {
+    generateBoard() {
         let initialSudokuArr = sudoku.generate("easy");
-        initialSudokuArr = keyIndex(initialSudokuArr, 1);
         console.log(initialSudokuArr, 'init');
         this.setState(previous => ({ initialBoard: [...previous.initialBoard + initialSudokuArr] }),
             () => console.log(this.state.initialBoard, 'callback')
+        );
+        this.setState(prev => ({ board: [...prev.board + initialSudokuArr] }),
+            () => console.log(this.state.board, 'callb set board')
         );
     }
     
@@ -43,12 +45,15 @@ class App extends React.Component {
     render() {
         
         return (
-            <div className="App">
-                <h1>Sudoku</h1>
-                <Board initBoard={this.state.initialBoard}/>
-                <div className="buttons">
+            <div className={styles.App}>
+                <h1>Sudoku</h1>  
+                <Board 
+                    board={this.state.board}
+                    initialBoard={this.state.initialBoard}
+                />
+                <div className={styles.buttons}>
                     <button>Check</button>
-                    <button onClick={this.generateInitialBoard}>New Game</button>
+                    <button onClick={this.generateBoard}>New Game</button>
                     <button onClick={this.sudokuSolve}>Solve</button>
                     <button onClick={this.setInitialBoardAsBoard}>Restart</button>
                 </div>

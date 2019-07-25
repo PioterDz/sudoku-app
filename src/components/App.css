@@ -1,6 +1,26 @@
+.App {
+    text-align: center;
+    width: 560px;
+    margin: auto;
+}
+
+h1 {
+    display: flex;
+    flex-direction: column;
+    color: orange;
+}
+    
 button {
     background-color: orange;
     color: white;
     padding: 20px;
     border-radius: 10px;
+}
+
+input {
+    border: 1px solid black;
+    width: 60px;
+    height: 60px;
+    padding: 0;
+    text-align: center;
 }
