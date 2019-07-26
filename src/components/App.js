@@ -28,8 +28,8 @@ class App extends React.Component {
         sudokuArray.map((val, idx) => val !== '.' ? ids.push(idx) : void(0));
 
         this.setState({
-            initialBoard: sudokuArray,
-            board: sudokuArray,
+            initialBoard: [...sudokuArray],
+            board: [...sudokuArray],
             noEditIds: ids
         });
     }
@@ -38,11 +38,10 @@ class App extends React.Component {
         const updatedBoard = this.state.board;
         const checkTile = (value !== '') ? value : '.'; 
         updatedBoard.splice(id, 1, checkTile);
+        
         this.setState({
             board: updatedBoard
         });
-        console.log(this.state.board, 'board in update');
-        console.log(this.state.initialBoard, 'initboard in update');
     }
 
     sudokuSolve() {

@@ -1,5 +1,12 @@
 import React from 'react';
-import styles from './Tile.css'
+
+const nonEditStyle = {
+    backgroundColor: 'lightgrey'
+};
+
+const editStyle = {
+    backgroundColor: 'white';
+};
 
 class Tile extends React.Component {
     constructor(props) {
@@ -15,7 +22,7 @@ class Tile extends React.Component {
 
         return (
             <input
-                className={this.props.readonly ? 'nonEdit' : 'edit'}
+                style={this.props.readonly ? nonEditStyle : editStyle}
                 type="number" 
                 min="1" 
                 max="9" 

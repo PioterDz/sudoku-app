@@ -1,5 +1,4 @@
 import React from 'react';
-import styles from './Board.css'
 import Tile from './Tile.js';
 
 const uuidv1 = require('uuid/v1');
