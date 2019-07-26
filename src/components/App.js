@@ -10,36 +10,66 @@ class App extends React.Component {
         super();
         this.state = {
             initialBoard: [],
-            board: []
+            board: [],
+            noEditIds: []
         }
         this.generateBoard = this.generateBoard.bind(this);
         this.sudokuSolve = this.sudokuSolve.bind(this);
-        this.setInitialBoardAsBoard = this.setInitialBoardAsBoard.bind(this);
+        this.restartBoard = this.restartBoard.bind(this);
+        this.updateBoard = this.updateBoard.bind(this);
+        this.checkSolution = this.checkSolution.bind(this);
     }
 
 
     generateBoard() {
-        let initialSudokuArr = sudoku.generate("easy");
-        console.log(initialSudokuArr, 'init');
-        this.setState(previous => ({ initialBoard: [...previous.initialBoard + initialSudokuArr] }),
-            () => console.log(this.state.initialBoard, 'callback')
-        );
-        this.setState(prev => ({ board: [...prev.board + initialSudokuArr] }),
-            () => console.log(this.state.board, 'callb set board')
-        );
-    }
-    
-    sudokuSolve() {
-        let actuallBoardStatus = this.state.board;
-        sudoku.solve(actuallBoardStatus.join(''));
+        const sudokuString = sudoku.generate("easy");
+        const sudokuArray = sudokuString.split('');
+        const ids = [];
+        sudokuArray.map((val, idx) => val !== '.' ? ids.push(idx) : void(0));
+
+        this.setState({
+            initialBoard: sudokuArray,
+            board: sudokuArray,
+            noEditIds: ids
+        });
     }
 
-    setInitialBoardAsBoard() {
-        let initialBoard = this.state.initialBoard;
-        this.setState({ board: [] });
-        this.setState(previous => ({ board: [...previous.board + initialBoard] }), 
-            () => console.log(this.state, 'restart board callback')
-        );
+    updateBoard(id, value) {
+        const updatedBoard = this.state.board;
+        const checkTile = (value !== '') ? value : '.'; 
+        updatedBoard.splice(id, 1, checkTile);
+        this.setState({
+            board: updatedBoard
+        });
+        console.log(this.state.board, 'board in update');
+        console.log(this.state.initialBoard, 'initboard in update');
+    }
+
+    sudokuSolve() {
+        const startBoard = this.state.initialBoard;
+        const startBoardToString = startBoard.join('');
+        const sollution = sudoku.solve(startBoardToString);
+        this.setState({board: sollution.split('')});
+    }
+
+    checkSolution() {
+        const startBoard = this.state.initialBoard;
+        const actuallBoard = this.state.board;
+
+        const actuallBoardToString = actuallBoard.join('');
+
+        const startBoardToString = startBoard.join('');
+        const sollution = sudoku.solve(startBoardToString);
+
+        actuallBoardToString === sollution ? alert('Congrats! You made it!') : alert('Its not right, try again');
+
+    }
+
+    restartBoard() {
+        const initBoard = this.state.initialBoard;
+        this.setState({
+            board: initBoard
+        });
     }
 
     render() {
@@ -49,13 +79,14 @@ class App extends React.Component {
                 <h1>Sudoku</h1>  
                 <Board 
                     board={this.state.board}
-                    initialBoard={this.state.initialBoard}
+                    updateBoard={this.updateBoard}
+                    noEdit={this.state.noEditIds}
                 />
                 <div className={styles.buttons}>
-                    <button>Check</button>
+                    <button onClick={this.checkSolution}>Check</button>
                     <button onClick={this.generateBoard}>New Game</button>
                     <button onClick={this.sudokuSolve}>Solve</button>
-                    <button onClick={this.setInitialBoardAsBoard}>Restart</button>
+                    <button onClick={this.restartBoard}>Restart</button>
                 </div>
             </div>
         );

@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from './Tile.css'
 
 class Tile extends React.Component {
     constructor(props) {
@@ -8,20 +9,20 @@ class Tile extends React.Component {
 
     handleChange(e) {
         this.props.updateBoard(e.target.id, e.target.value);
-        console.log(e.target.id, e.target.value, 'handlechange');
     }
 
     render() {
-        console.log(this.props.id, 'props.id');
-        console.log(this.props.updateBoard, 'upddateBoard in tile');
+
         return (
             <input
+                className={this.props.readonly ? 'nonEdit' : 'edit'}
                 type="number" 
                 min="1" 
                 max="9" 
                 value={this.props.item} 
                 onChange={this.handleChange}
                 id={this.props.id}
+                readOnly={this.props.readonly}
              >
              </input>
         );
