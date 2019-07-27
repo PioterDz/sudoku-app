@@ -10,7 +10,7 @@ class Board extends React.Component {
 
     render() {
         return (
-            <div className={styles.Board}>
+            <div>
                 { this.props.board.length === 0 ? 'Start New Game' : this.props.board.map((val, index) => 
                 <Tile 
                 key={uuidv1()} 

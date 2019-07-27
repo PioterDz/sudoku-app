@@ -5,7 +5,7 @@ const nonEditStyle = {
 };
 
 const editStyle = {
-    backgroundColor: 'white';
+    backgroundColor: 'white'
 };
 
 class Tile extends React.Component {
